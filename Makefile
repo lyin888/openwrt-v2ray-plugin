@@ -8,17 +8,20 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=v2ray-plugin
-PKG_VERSION:=1.0
-PKG_RELEASE:=8cea1a3
+PKG_VERSION:=1.2.0
+PKG_RELEASE:=20191007
 PKG_MAINTAINER:=chenhw2 <https://github.com/chenhw2>
 
 # OpenWrt ARCH: arm, i386, x86_64, mips, mipsel
 # Golang ARCH: arm[5-7], 386, amd64, mips, mipsle
 PKG_ARCH:=$(ARCH)
 BIN_ARCH:=$(ARCH)
+ifeq ($(ARCH),mips)
+    BIN_ARCH:=mips_sf
+endif
 ifeq ($(ARCH),mipsel)
 	PKG_ARCH:=mips
-	BIN_ARCH:=mipsle
+	BIN_ARCH:=mipsle_sf
 endif
 ifeq ($(ARCH),i386)
 	PKG_ARCH:=386
@@ -32,7 +35,7 @@ ifeq ($(ARCH),arm)
 	BIN_ARCH:=arm7
 endif
 
-PKG_SOURCE:=v2ray-plugin-linux-$(PKG_ARCH)-$(PKG_RELEASE).tar.gz
+PKG_SOURCE:=v2ray-plugin-linux-$(PKG_ARCH)-v$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/shadowsocks/v2ray-plugin/releases/download/v$(PKG_VERSION)/
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 PKG_HASH:=skip
